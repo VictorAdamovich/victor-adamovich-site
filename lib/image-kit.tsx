@@ -79,7 +79,15 @@ export function MatrixCard({ timeline, dot, gap, labelSize, padding }: MatrixPro
       <div style={{ display: "flex", flexDirection: "column", gap }}>
         {timeline.years.map((y) => (
           <div key={y} style={{ display: "flex", alignItems: "center", gap }}>
-            <span style={{ width: labelSize * 3.5, fontFamily: "Geist Mono", fontSize: labelSize, color: COLORS.muted }}>
+            <span
+              style={{
+                width: labelSize * 3.5,
+                fontFamily: "Geist Mono",
+                fontSize: labelSize,
+                color: COLORS.muted,
+                opacity: timeline.fade(y, 0),
+              }}
+            >
               {y}
             </span>
             {Array.from({ length: 12 }, (_, m) => {
@@ -93,6 +101,7 @@ export function MatrixCard({ timeline, dot, gap, labelSize, padding }: MatrixPro
                     borderRadius: dot / 2,
                     background: c ?? "transparent",
                     border: c ? "none" : "1px solid rgba(17,17,17,0.14)",
+                    opacity: c ? 1 : timeline.fade(y, m),
                   }}
                 />
               );
@@ -101,7 +110,7 @@ export function MatrixCard({ timeline, dot, gap, labelSize, padding }: MatrixPro
         ))}
       </div>
       <span style={{ fontFamily: "Geist Mono", fontSize: labelSize, color: COLORS.muted }}>
-        {timeline.range} · {timeline.months} months
+        {timeline.range}
       </span>
     </div>
   );

@@ -105,17 +105,30 @@ export function getTimeline(now = currentMonth()) {
   const start = ROLES.reduce((min, r) => (r.from < min ? r.from : min), ROLES[0].from);
   const firstYear = Number(start.slice(0, 4));
   const lastYear = Number(now.slice(0, 4));
-  const years = Array.from({ length: lastYear - firstYear + 1 }, (_, i) => firstYear + i);
+  // One extra, fading row for next year: the timeline has no end.
+  const years = Array.from({ length: lastYear - firstYear + 2 }, (_, i) => firstYear + i);
   const roles = ROLES.map((r) => ({ ...r, to: r.to ?? now }));
   const months = toIndex(now) - toIndex(start) + 1;
   const [sy, sm] = [start.slice(0, 4), start.slice(5)];
-  const [ny, nm] = [now.slice(0, 4), now.slice(5)];
 
   return {
     now,
     years,
     months,
-    range: `${sm}.${sy} — ${nm}.${ny}`,
+    /** open-ended: only the start is fixed */
+    range: `${sm}.${sy} — ∞`,
+    /**
+     * Opacity for a month after now: the empty dots fade out towards
+     * the end of the row, so the timeline reads as still going.
+     */
+    fade(year: number, monthIndex: number) {
+      const k = `${year}-${pad(monthIndex + 1)}`;
+      if (k <= now) return 1;
+      // Fade evenly from now to the end of the extra row.
+      const steps = toIndex(k) - toIndex(now);
+      const total = toIndex(`${lastYear + 1}-12`) - toIndex(now) + 1;
+      return Number((1 - (steps / total) * 0.94).toFixed(2));
+    },
     /** role active in a month, or null; the current month is flagged */
     at(year: number, monthIndex: number) {
       const k = `${year}-${pad(monthIndex + 1)}`;

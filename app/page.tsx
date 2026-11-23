@@ -27,7 +27,7 @@ function Matrix({ timeline }: { timeline: ReturnType<typeof getTimeline> }) {
       <div
         className="matrix"
         role="img"
-        aria-label={`Work timeline ${timeline.range}, ${timeline.months} months`}
+        aria-label={`Work timeline since ${timeline.range.split(" ")[0]}, ${timeline.months} months so far`}
       >
         <span />
         {MONTHS.map((m, i) => (
@@ -37,11 +37,16 @@ function Matrix({ timeline }: { timeline: ReturnType<typeof getTimeline> }) {
         ))}
         {timeline.years.map((y) => (
           <div key={y} className="matrix-row">
-            <span className="matrix-year">{y}</span>
+            <span className="matrix-year" style={{ opacity: timeline.fade(y, 0) }}>
+              {y}
+            </span>
             {MONTHS.map((_, m) => {
               const t = timeline.at(y, m);
               const key = `${y}-${m}`;
-              if (!t) return <span key={key} className="dot dot-empty" />;
+              if (!t)
+                return (
+                  <span key={key} className="dot dot-empty" style={{ opacity: timeline.fade(y, m) }} />
+                );
               return (
                 <span
                   key={key}
@@ -126,7 +131,7 @@ export default function Home() {
               Experience
             </h2>
             <span className="meta">
-              {timeline.range} · {timeline.months} months
+              {timeline.range}
             </span>
           </div>
           <div className="experience-body">
