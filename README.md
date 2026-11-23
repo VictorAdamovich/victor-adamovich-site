@@ -20,3 +20,7 @@ npm run build && npm start
 Content (contacts, roles, projects) lives in `app/data.ts`. Put your CV at `public/cv.pdf`.
 
 Fonts: Geist and Geist Mono (`geist` package), Doto (SIL OFL) self-hosted in `app/fonts`.
+
+## LinkedIn banner
+
+`/linkedin-banner.png` renders a 1584×396 profile background from the same timeline as the OG image (shared code in `lib/image-kit.tsx`), revalidated daily. Download it once a month and upload it to LinkedIn.
