@@ -5,9 +5,9 @@ const MONTHS = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
 const key = (y: number, m: number) => `${y}-${String(m + 1).padStart(2, "0")}`;
 
 function monthTone(k: string) {
-  if (k === NOW) return { tone: "var(--accent)", label: "now" };
   const role = ROLES.find((r) => k >= r.from && k <= r.to);
-  return role ? { tone: role.tone, label: role.company } : null;
+  if (k === NOW) return { tone: "var(--accent)", label: "now", role: role?.company.toLowerCase() };
+  return role ? { tone: role.tone, label: role.company, role: role.company.toLowerCase() } : null;
 }
 
 const LINKS = [
@@ -55,6 +55,7 @@ function Matrix() {
                 <span
                   key={k}
                   className={`dot${t ? "" : " dot-empty"}${k === NOW ? " dot-now" : ""}`}
+                  data-role={t?.role}
                   style={t ? { background: t.tone } : undefined}
                   title={t ? `${k} · ${t.label}` : k}
                 />
@@ -137,7 +138,7 @@ export default function Home() {
             <Matrix />
             <ol className="roles">
               {ROLES.map((r) => (
-                <li key={r.company} className="role">
+                <li key={r.company} className="role" data-role={r.company.toLowerCase()} tabIndex={0}>
                   <span className="role-dot" style={{ background: r.tone }} aria-hidden />
                   <div className="role-text">
                     <div className="role-head">

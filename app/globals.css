@@ -352,8 +352,47 @@ ol {
 .role {
   display: flex;
   gap: 12px;
+  cursor: default;
   padding: 14px 0;
   border-top: 1px solid var(--line);
+}
+
+/* Hover a role → its months light up on the matrix */
+.dot {
+  transition: opacity 180ms var(--ease), transform 180ms var(--ease);
+}
+
+.role {
+  transition: opacity 180ms var(--ease);
+}
+
+.experience:has(.role:hover, .role:focus-visible) .role:not(:hover, :focus-visible) {
+  opacity: 0.4;
+}
+
+.experience:has(.role[data-role="mobyrix"]:is(:hover, :focus-visible)) .dot:not([data-role="mobyrix"]),
+.experience:has(.role[data-role="leime"]:is(:hover, :focus-visible)) .dot:not([data-role="leime"]),
+.experience:has(.role[data-role="pixelplex"]:is(:hover, :focus-visible)) .dot:not([data-role="pixelplex"]),
+.experience:has(.role[data-role="freelance"]:is(:hover, :focus-visible)) .dot:not([data-role="freelance"]) {
+  opacity: 0.15;
+}
+
+.experience:has(.role[data-role="mobyrix"]:is(:hover, :focus-visible)) .dot[data-role="mobyrix"],
+.experience:has(.role[data-role="leime"]:is(:hover, :focus-visible)) .dot[data-role="leime"],
+.experience:has(.role[data-role="pixelplex"]:is(:hover, :focus-visible)) .dot[data-role="pixelplex"],
+.experience:has(.role[data-role="freelance"]:is(:hover, :focus-visible)) .dot[data-role="freelance"] {
+  transform: scale(1.12);
+}
+
+.role:focus-visible {
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot,
+  .role {
+    transition: none;
+  }
 }
 
 .role-dot {

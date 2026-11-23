@@ -7,14 +7,25 @@ export const CONTACTS = {
 };
 
 export const STACK = [
+  "JavaScript",
+  "TypeScript",
   "React",
   "Next.js",
-  "TypeScript",
+  "HTML",
+  "CSS",
   "Redux Toolkit",
   "Zustand",
   "GraphQL",
   "Jest",
+  "React Testing Library",
   "Playwright",
+  "Wagmi",
+  "Web3Modal",
+  "WalletConnect",
+  "MetaMask",
+  "Uniswap V3",
+  "Strapi",
+  "Chrome extensions",
 ];
 
 type Role = {
