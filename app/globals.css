@@ -7,6 +7,7 @@
   --line: rgb(17 17 17 / 0.08);
   --line-strong: rgb(17 17 17 / 0.12);
   --accent: #d71921;
+  --live: #16a34a;
   --tone-1: #111111;
   --tone-2: #5c5c57;
   --tone-3: #9b9b95;
@@ -217,7 +218,20 @@ ol {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--live);
+  animation: blink 1.6s ease-in-out infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-dot {
+    animation: none;
+  }
 }
 
 .name {
