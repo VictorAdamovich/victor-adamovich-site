@@ -1,3 +1,11 @@
+export const SITE = {
+  url: "https://victor-adamovich-site.vercel.app",
+  name: "Victor Adamovich",
+  title: "Victor Adamovich — Frontend developer (React, Next.js, Web3)",
+  description:
+    "Frontend developer with 4.5 years in React, Next.js and TypeScript. DeFi swaps, wallet connections, checkouts and subscription flows. Open to offers.",
+};
+
 export const CONTACTS = {
   github: "https://github.com/VictorAdamovich",
   linkedin: "https://www.linkedin.com/in/victoradamovich/",
