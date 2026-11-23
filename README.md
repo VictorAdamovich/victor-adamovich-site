@@ -23,4 +23,4 @@ Fonts: Geist and Geist Mono (`geist` package), Doto (SIL OFL) self-hosted in `ap
 
 ## LinkedIn banner
 
-`/linkedin-banner.png` renders a 1584×396 profile background from the same timeline as the OG image (shared code in `lib/image-kit.tsx`), revalidated daily. Download it once a month and upload it to LinkedIn.
+`/linkedin-banner.png` renders a 1584×396 text-only profile background (status, title, stack) with the same fonts and colors as the OG image (`lib/image-kit.tsx`). Download it and upload it to LinkedIn.
