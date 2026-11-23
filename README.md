@@ -1,6 +1,8 @@
 # victor-adamovich-site
 
-Personal one-screen site of Victor Adamovich, frontend developer. Next.js (App Router) with static export, light theme inspired by nothing.tech.
+Personal one-screen site of Victor Adamovich, frontend developer. Next.js (App Router), statically prerendered and revalidated daily (ISR), light theme inspired by nothing.tech.
+
+The experience matrix, its month count and the OG image are computed from the current date (`getTimeline` in `app/data.ts`), so they move forward every month without a redeploy.
 
 ## Develop
 
@@ -12,7 +14,7 @@ npm run dev
 ## Build
 
 ```bash
-npm run build   # static files in ./out
+npm run build && npm start
 ```
 
 Content (contacts, roles, projects) lives in `app/data.ts`. Put your CV at `public/cv.pdf`.

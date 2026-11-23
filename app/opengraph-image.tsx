@@ -1,9 +1,10 @@
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { NOW, ROLES, SITE, YEARS } from "./data";
+import { SITE, getTimeline } from "./data";
 
-export const dynamic = "force-static";
+// Regenerated on Vercel at most once a day, so the image follows the current month.
+export const revalidate = 86400;
 export const alt = `${SITE.name} — Frontend developer`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -15,14 +16,14 @@ const TONES: Record<string, string> = {
   "var(--tone-4)": "#cdcdc7",
 };
 
-function dotColor(y: number, m: number) {
-  const k = `${y}-${String(m + 1).padStart(2, "0")}`;
-  if (k === NOW) return "#d71921";
-  const role = ROLES.find((r) => k >= r.from && k <= r.to);
-  return role ? TONES[role.tone] : null;
-}
 
 export default async function Image() {
+  const timeline = getTimeline();
+  const dotColor = (y: number, m: number) => {
+    const t = timeline.at(y, m);
+    if (!t) return null;
+    return t.isNow ? "#d71921" : TONES[t.role.tone];
+  };
   const font = (f: string) => readFile(join(process.cwd(), "app/fonts", f));
   const [doto, regular, medium, mono] = await Promise.all([
     font("Doto-Bold.woff"),
@@ -78,7 +79,7 @@ export default async function Image() {
           }}
         >
           <div style={{ display: "flex", flexDirection: "column", gap: GAP }}>
-            {YEARS.map((y) => (
+            {timeline.years.map((y) => (
               <div key={y} style={{ display: "flex", alignItems: "center", gap: GAP }}>
                 <span style={{ width: 56, fontFamily: "Geist Mono", fontSize: 16, color: "#73736d" }}>{y}</span>
                 {Array.from({ length: 12 }, (_, m) => {
@@ -100,7 +101,7 @@ export default async function Image() {
             ))}
           </div>
           <span style={{ fontFamily: "Geist Mono", fontSize: 16, color: "#73736d" }}>
-            09.2021 — now · 1 dot = 1 month
+            {timeline.range} · {timeline.months} months
           </span>
         </div>
       </div>

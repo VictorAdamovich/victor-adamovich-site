@@ -1,14 +1,10 @@
-import { CONTACTS, NOW, PROJECTS, ROLES, STACK, YEARS } from "./data";
+import { CONTACTS, PROJECTS, ROLES, STACK, getTimeline } from "./data";
 import { ArrowUpRight, Download, Github, Linkedin, Mail, Send } from "./icons";
 
-const MONTHS = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
-const key = (y: number, m: number) => `${y}-${String(m + 1).padStart(2, "0")}`;
+// Rebuilt on Vercel at most once a day (ISR), so the matrix moves with the calendar.
+export const revalidate = 86400;
 
-function monthTone(k: string) {
-  const role = ROLES.find((r) => k >= r.from && k <= r.to);
-  if (k === NOW) return { tone: "var(--accent)", label: "now", role: role?.company.toLowerCase() };
-  return role ? { tone: role.tone, label: role.company, role: role.company.toLowerCase() } : null;
-}
+const MONTHS = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
 
 const LINKS = [
   { href: CONTACTS.github, label: "GitHub", Icon: Github },
@@ -25,19 +21,13 @@ function CvButton({ className = "" }: { className?: string }) {
   );
 }
 
-function Matrix() {
-  const totalMonths = ROLES.reduce((n, r) => {
-    const [fy, fm] = r.from.split("-").map(Number);
-    const [ty, tm] = r.to.split("-").map(Number);
-    return n + (ty - fy) * 12 + (tm - fm) + 1;
-  }, 0);
-
+function Matrix({ timeline }: { timeline: ReturnType<typeof getTimeline> }) {
   return (
     <figure className="matrix-col">
       <div
         className="matrix"
         role="img"
-        aria-label={`Work timeline from September 2021 to now, ${totalMonths} months`}
+        aria-label={`Work timeline ${timeline.range}, ${timeline.months} months`}
       >
         <span />
         {MONTHS.map((m, i) => (
@@ -45,19 +35,20 @@ function Matrix() {
             {m}
           </span>
         ))}
-        {YEARS.map((y) => (
+        {timeline.years.map((y) => (
           <div key={y} className="matrix-row">
             <span className="matrix-year">{y}</span>
             {MONTHS.map((_, m) => {
-              const k = key(y, m);
-              const t = monthTone(k);
+              const t = timeline.at(y, m);
+              const key = `${y}-${m}`;
+              if (!t) return <span key={key} className="dot dot-empty" />;
               return (
                 <span
-                  key={k}
-                  className={`dot${t ? "" : " dot-empty"}${k === NOW ? " dot-now" : ""}`}
-                  data-role={t?.role}
-                  style={t ? { background: t.tone } : undefined}
-                  title={t ? `${k} · ${t.label}` : k}
+                  key={key}
+                  className={`dot${t.isNow ? " dot-now" : ""}`}
+                  data-role={t.role.company.toLowerCase()}
+                  style={{ background: t.isNow ? "var(--accent)" : t.role.tone }}
+                  title={`${t.key} · ${t.isNow ? "now" : t.role.company}`}
                 />
               );
             })}
@@ -70,6 +61,8 @@ function Matrix() {
 }
 
 export default function Home() {
+  const timeline = getTimeline();
+
   return (
     <main className="page">
       <header className="header">
@@ -132,10 +125,12 @@ export default function Home() {
             <h2 id="experience-title" className="title">
               Experience
             </h2>
-            <span className="meta">09.2021 — 11.2026 · 63 months</span>
+            <span className="meta">
+              {timeline.range} · {timeline.months} months
+            </span>
           </div>
           <div className="experience-body">
-            <Matrix />
+            <Matrix timeline={timeline} />
             <ol className="roles">
               {ROLES.map((r) => (
                 <li key={r.company} className="role" data-role={r.company.toLowerCase()} tabIndex={0}>

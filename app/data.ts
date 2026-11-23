@@ -41,9 +41,9 @@ type Role = {
   period: string;
   description: string;
   tone: string;
-  /** inclusive month range, "YYYY-MM" */
+  /** inclusive month range, "YYYY-MM"; no `to` means the role is ongoing */
   from: string;
-  to: string;
+  to?: string;
 };
 
 export const ROLES: Role[] = [
@@ -53,7 +53,6 @@ export const ROLES: Role[] = [
     description: "Checkout, payment and subscription flows",
     tone: "var(--tone-1)",
     from: "2025-10",
-    to: "2026-11",
   },
   {
     company: "Leime",
@@ -82,8 +81,50 @@ export const ROLES: Role[] = [
   },
 ];
 
-export const NOW = "2026-11";
-export const YEARS = [2021, 2022, 2023, 2024, 2025, 2026];
+export type Month = `${number}-${string}`;
+
+const pad = (n: number) => String(n).padStart(2, "0");
+const toIndex = (k: string) => {
+  const [y, m] = k.split("-").map(Number);
+  return y * 12 + (m - 1);
+};
+
+/** Current month as "YYYY-MM" in Minsk time. */
+export function currentMonth(date = new Date()): string {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/Minsk",
+    year: "numeric",
+    month: "2-digit",
+  }).formatToParts(date);
+  const get = (t: string) => parts.find((p) => p.type === t)!.value;
+  return `${get("year")}-${get("month")}`;
+}
+
+/** Everything the experience matrix needs, computed for a given month. */
+export function getTimeline(now = currentMonth()) {
+  const start = ROLES.reduce((min, r) => (r.from < min ? r.from : min), ROLES[0].from);
+  const firstYear = Number(start.slice(0, 4));
+  const lastYear = Number(now.slice(0, 4));
+  const years = Array.from({ length: lastYear - firstYear + 1 }, (_, i) => firstYear + i);
+  const roles = ROLES.map((r) => ({ ...r, to: r.to ?? now }));
+  const months = toIndex(now) - toIndex(start) + 1;
+  const [sy, sm] = [start.slice(0, 4), start.slice(5)];
+  const [ny, nm] = [now.slice(0, 4), now.slice(5)];
+
+  return {
+    now,
+    years,
+    months,
+    range: `${sm}.${sy} — ${nm}.${ny}`,
+    /** role active in a month, or null; the current month is flagged */
+    at(year: number, monthIndex: number) {
+      const k = `${year}-${pad(monthIndex + 1)}`;
+      if (k > now) return null;
+      const role = roles.find((r) => k >= r.from && k <= r.to);
+      return role ? { key: k, role, isNow: k === now } : null;
+    },
+  };
+}
 
 export const PROJECTS = [
   {
