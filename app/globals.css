@@ -286,8 +286,7 @@ ol {
   padding: 24px;
 }
 
-.card-header,
-.work-header {
+.card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -430,68 +429,12 @@ ol {
   color: var(--sec);
 }
 
-/* ---------- Work ---------- */
+/* ---------- Footer ---------- */
 
-.work {
+.footer {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.projects {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 24px;
-}
-
-.project {
-  display: flex;
-  flex-direction: column;
   justify-content: space-between;
-  gap: 24px;
-  height: 100%;
-  min-height: 200px;
-  padding: 24px;
-  transition: border-color 150ms var(--ease);
-}
-
-.project:hover {
-  border-color: rgb(17 17 17 / 0.24);
-}
-
-.project-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.project-arrow {
-  display: flex;
-  color: var(--muted);
-  transition: color 150ms var(--ease), transform 150ms var(--ease);
-}
-
-.project:hover .project-arrow {
-  color: var(--accent);
-  transform: translate(2px, -2px);
-}
-
-.project-text {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.project-domain {
-  font-size: 20px;
-  line-height: 24px;
-  font-weight: 500;
-}
-
-.project-desc {
-  font-size: 14px;
-  line-height: 20px;
-  color: var(--sec);
+  gap: 16px;
 }
 
 /* ---------- Desktop: one screen ---------- */
@@ -503,8 +446,7 @@ ol {
   }
 
   .top {
-    flex: 1;
-    min-height: 0;
+    margin: auto 0;
   }
 }
 
@@ -543,15 +485,6 @@ ol {
   .name {
     font-size: 88px;
     line-height: 80px;
-  }
-
-  .projects {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
-  }
-
-  .project {
-    min-height: 176px;
   }
 }
 
@@ -616,7 +549,7 @@ ol {
   }
 
   .card-header,
-  .work-header {
+  .footer {
     flex-direction: column;
     align-items: flex-start;
   }
@@ -624,15 +557,6 @@ ol {
   .experience-body {
     flex-direction: column;
     gap: 24px;
-  }
-
-  .projects {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .project {
-    min-height: 148px;
   }
 }
 

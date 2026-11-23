@@ -1,5 +1,5 @@
-import { CONTACTS, PROJECTS, ROLES, STACK, getTimeline } from "./data";
-import { ArrowUpRight, Download, Github, Linkedin, Mail, Send } from "./icons";
+import { CONTACTS, ROLES, STACK, getTimeline } from "./data";
+import { Download, Github, Linkedin, Mail, Send } from "./icons";
 
 // Rebuilt on Vercel at most once a day (ISR), so the matrix moves with the calendar.
 export const revalidate = 86400;
@@ -149,32 +149,10 @@ export default function Home() {
         </section>
       </section>
 
-      <section className="work" aria-labelledby="work-title">
-        <div className="work-header">
-          <h2 id="work-title" className="title">
-            Selected work
-          </h2>
-          <span className="meta">Products I worked on in a team</span>
-        </div>
-        <ul className="projects">
-          {PROJECTS.map((p, i) => (
-            <li key={p.domain}>
-              <a className="card project" href={p.href} target="_blank" rel="noreferrer">
-                <span className="project-top">
-                  <span className="meta">{String(i + 1).padStart(2, "0")}</span>
-                  <span className="project-arrow">
-                    <ArrowUpRight />
-                  </span>
-                </span>
-                <span className="project-text">
-                  <span className="project-domain">{p.domain}</span>
-                  <span className="project-desc">{p.description}</span>
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
+      <footer className="footer">
+        <span className="meta">© {timeline.now.slice(0, 4)} Victor Adamovich</span>
+        <span className="meta">The matrix moves with the calendar</span>
+      </footer>
     </main>
   );
 }
