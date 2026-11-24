@@ -1,0 +1,56 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 32px;
+  min-height: 100dvh;
+  animation: enter 420ms var(--ease) both;
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.top {
+  display: flex;
+  gap: 24px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page {
+    animation: none;
+  }
+}
+
+/* Desktop: everything fits one screen */
+@media (min-width: 1200px) and (min-height: 820px) {
+  .page {
+    height: 100dvh;
+    gap: 32px;
+  }
+
+  .top {
+    margin: auto 0;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1199px) {
+  .top {
+    flex-direction: column;
+    gap: 40px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 719px) {
+  .page {
+    padding: 20px 16px 16px;
+    gap: 40px;
+  }
+}

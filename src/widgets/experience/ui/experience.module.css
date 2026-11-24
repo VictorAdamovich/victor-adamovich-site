@@ -1,0 +1,116 @@
+.experience {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 16px;
+}
+
+.body {
+  flex: 1;
+  display: flex;
+  gap: 40px;
+}
+
+.roles {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Hover a role → the other roles fade; per-role dot rules come from lib/highlight-css.ts */
+.experience:has([data-role]:is(:hover, :focus-visible)) [data-role]:not(:hover, :focus-visible) {
+  opacity: 0.4;
+}
+
+/* ---------- Matrix ---------- */
+
+.matrixCol {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+}
+
+.matrix {
+  --dot: 24px;
+  --dot-gap: 10px;
+  display: grid;
+  grid-template-columns: calc(52px - var(--dot-gap)) repeat(12, var(--dot));
+  gap: var(--dot-gap);
+  align-items: center;
+}
+
+.row {
+  display: contents;
+}
+
+.month {
+  text-align: center;
+}
+
+.dot {
+  width: var(--dot);
+  height: var(--dot);
+  border-radius: 50%;
+  transition: opacity 180ms var(--ease), transform 180ms var(--ease);
+}
+
+.empty {
+  box-shadow: inset 0 0 0 1px var(--dot-empty);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot {
+    transition: none;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1199px) {
+  .matrix {
+    --dot: 18px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 719px) {
+  .experience {
+    padding: 20px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .body {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .matrix {
+    --dot: 14px;
+    --dot-gap: 8px;
+  }
+}
+
+@media (max-width: 359px) {
+  .matrix {
+    --dot: 12px;
+    --dot-gap: 7px;
+  }
+}

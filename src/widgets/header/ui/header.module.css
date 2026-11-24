@@ -1,0 +1,91 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mark {
+  font-family: var(--font-dot);
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 28px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--sec);
+  transition: color 150ms var(--ease);
+}
+
+.link:hover {
+  color: var(--ink);
+}
+
+.emailShort {
+  display: none;
+}
+
+/* Tablet */
+@media (max-width: 1199px) {
+  .name,
+  .emailFull {
+    display: none;
+  }
+
+  .actions {
+    gap: 24px;
+  }
+
+  .emailShort {
+    display: inline;
+  }
+}
+
+/* Mobile: icon-only links, CV moves into About */
+@media (max-width: 719px) {
+  .actions .cv,
+  .label {
+    display: none;
+  }
+
+  .links {
+    gap: 8px;
+  }
+
+  .link {
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    border: 1px solid var(--line-strong);
+    border-radius: 10px;
+    color: var(--ink);
+  }
+
+  .link svg {
+    width: 18px;
+    height: 18px;
+  }
+}

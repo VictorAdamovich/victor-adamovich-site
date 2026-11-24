@@ -1,0 +1,17 @@
+.meta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.small {
+  font-size: 11px;
+}
+
+.title {
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 500;
+}

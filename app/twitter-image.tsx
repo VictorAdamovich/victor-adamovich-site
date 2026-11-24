@@ -1,8 +1,3 @@
-import Image from "./opengraph-image";
+export { OgImage as default, alt, size, contentType } from "@/pages/og-image";
 
 export const revalidate = 86400;
-export const alt = "Victor Adamovich — Frontend developer";
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
-
-export default Image;

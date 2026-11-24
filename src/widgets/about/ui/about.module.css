@@ -1,0 +1,118 @@
+.about {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+  width: 520px;
+  flex-shrink: 0;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.status .location {
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.liveDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--live);
+  animation: blink 1.6s ease-in-out infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.name {
+  font-family: var(--font-dot);
+  font-weight: 700;
+  font-size: 96px;
+  line-height: 88px;
+  letter-spacing: 0;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.bio {
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--sec);
+  max-width: 36rem;
+}
+
+/* Shown on mobile only, where the header hides its CV button */
+.bottom .cv {
+  display: none;
+}
+
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--sec);
+  padding: 6px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .liveDot {
+    animation: none;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1199px) {
+  .about {
+    width: auto;
+  }
+
+  .name {
+    font-size: 88px;
+    line-height: 80px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 719px) {
+  .about {
+    gap: 24px;
+  }
+
+  .name {
+    font-size: 56px;
+    line-height: 52px;
+  }
+
+  .bio {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .bottom .cv {
+    display: flex;
+    height: 44px;
+  }
+}

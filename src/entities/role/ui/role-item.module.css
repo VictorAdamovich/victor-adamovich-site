@@ -1,0 +1,47 @@
+.role {
+  display: flex;
+  gap: 12px;
+  cursor: default;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+  transition: opacity 180ms var(--ease);
+}
+
+.role:focus-visible {
+  outline-offset: 4px;
+}
+
+.dot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  margin-top: 6px;
+  border-radius: 50%;
+}
+
+.text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.description {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--sec);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .role {
+    transition: none;
+  }
+}
